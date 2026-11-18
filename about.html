@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Tentang Ecobrick - EcoBrickEdu</title>
+    <script>
+        (function(){try{var d=document.documentElement;var t=localStorage.getItem('ecobrickedu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}d.setAttribute('data-theme',t);if(!window.matchMedia||!window.matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('gsap-prep');}}catch(_){}})();
+    </script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            margin: 14px 0 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.95rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        tbody tr:last-child th,
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: var(--bg-subtle);
+        }
+
+        tbody tr:hover {
+            background-color: var(--accent-soft);
+        }
+
+        .calc-box {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: clamp(14px, 3vw, 22px);
+            margin-top: 16px;
+        }
+
+        .calc-form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .calc-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .calc-result {
+            margin-top: 20px;
+            padding: clamp(14px, 3vw, 22px);
+            background-color: var(--bg-surface);
+            border: 2px solid var(--text-accent);
+            border-radius: var(--radius-lg);
+        }
+
+        .calc-empty {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .calc-result h3 {
+            color: var(--text-accent);
+            margin-top: 0;
+            margin-bottom: 14px;
+            font-size: 1.15rem;
+        }
+
+        .calc-result-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin: 14px 0;
+        }
+
+        .result-card {
+            background: var(--bg-page);
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            min-width: 0;
+            transition: border-color 0.2s ease, transform 0.2s var(--ease-out);
+        }
+
+        .result-card:hover {
+            border-color: var(--text-accent);
+            transform: translateY(-2px);
+        }
+
+        .result-card h4 {
+            font-family: var(--font-body);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: 0;
+        }
+
+        .result-card .val {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-accent);
+            word-break: break-word;
+            margin-bottom: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .result-sub {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            display: block;
+        }
+
+        .recommendation-box {
+            background: var(--bg-page);
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .recommendation-box strong {
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .recommendation-box p {
+            margin-top: 4px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+            margin-top: 14px;
+        }
+
+        .step-item {
+            position: relative;
+            padding-left: 48px;
+            margin-bottom: 18px;
+            font-size: 0.97rem;
+            transition: transform 0.2s var(--ease-out);
+        }
+
+        .step-item::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 34px;
+            background-color: var(--primary);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: transform 0.22s var(--ease-out), background-color 0.2s ease;
+        }
+
+        .step-item:hover {
+            transform: translateX(3px);
+        }
+
+        .step-item:hover::before {
+            transform: scale(1.08);
+            background-color: var(--accent);
+        }
+
+        .alert-box {
+            background-color: var(--danger-bg);
+            border: 1px solid var(--danger-border);
+            border-left: 5px solid var(--danger-border);
+            padding: 18px;
+            border-radius: var(--radius-md);
+            margin-top: 22px;
+        }
+
+        .alert-box h3 {
+            color: var(--danger-text);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.08rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-box ul {
+            margin-left: 20px;
+            color: var(--danger-text);
+            font-size: 0.95rem;
+        }
+
+        .alert-box li + li {
+            margin-top: 6px;
+        }
+
+        .result-refresh {
+            animation: fadeSlideUp 0.28s var(--ease-out) both;
+        }
+
+        .result-refresh .result-card {
+            animation: fadeSlideUp 0.36s var(--ease-out) both;
+        }
+
+        .result-refresh .result-card:nth-child(2) {
+            animation-delay: 55ms;
+        }
+
+        .result-refresh .result-card:nth-child(3) {
+            animation-delay: 110ms;
+        }
+
+        .result-refresh .result-card:nth-child(4) {
+            animation-delay: 165ms;
+        }
+
+        @media (max-width: 479px) {
+            .calc-actions .btn {
+                width: 100%;
+            }
+
+            .result-card {
+                padding: 12px 14px;
+            }
+
+            .step-item {
+                padding-left: 42px;
+            }
+
+            .step-item::before {
+                width: 30px;
+                height: 30px;
+                font-size: 0.88rem;
+            }
+        }
+
+        @media (max-width: 599px) {
+            .table-responsive {
+                border: none;
+                overflow: visible;
+            }
+
+            table, tbody, tr, td {
+                display: block;
+                width: 100%;
+            }
+
+            thead {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+            }
+
+            tbody {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            tbody tr {
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius-md);
+                background: var(--bg-surface);
+                overflow: hidden;
+            }
+
+            tbody tr:nth-child(even) {
+                background: var(--bg-surface);
+            }
+
+            tbody td {
+                padding: 10px 14px;
+            }
+
+            tbody td:first-child {
+                background-color: var(--bg-subtle);
+                color: var(--text-accent-strong);
+                font-size: 0.92rem;
+            }
+
+            tbody td:last-child {
+                border-bottom: none;
+            }
+        }
+
+        @media (min-width: 560px) {
+            .calc-form {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .calc-result-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 960px) {
+            .calc-result-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+    </style>
+    <script src="assets/vendor/gsap.min.js" defer></script>
+    <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+    <script src="assets/js/nav.js" defer></script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+    <header>
+        <a href="beranda.html" class="logo">
+            <svg class="icon icon-brand" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M11 3h6v3l3 3v14a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2V9l3-3V3z" fill="rgba(224,242,254,0.2)"></path>
+                <path d="M11 3h6"></path>
+                <path d="M8 14h12"></path>
+                <path d="M14 19c2.5 0 4-1.8 4-4-2.2 0-4 1.5-4 4Z" fill="#e0f2fe"></path>
+            </svg>
+            <span>EcoBrickEdu</span>
+        </a>
+
+        <div class="header-controls">
+            <nav id="nav-menu" aria-label="Navigasi utama">
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="about.html" aria-current="page">Panduan &amp; Kalkulator</a></li>
+                    <li><a href="galeri.html">Galeri Karya</a></li>
+                    <li><a href="contact.html">Hubungi Kami</a></li>
+                </ul>
+            </nav>
+
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Aktifkan mode gelap" aria-pressed="false" title="Ubah mode terang atau gelap">
+                <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2"></path>
+                    <path d="M12 20v2"></path>
+                    <path d="m4.93 4.93 1.41 1.41"></path>
+                    <path d="m17.66 17.66 1.41 1.41"></path>
+                    <path d="M2 12h2"></path>
+                    <path d="M20 12h2"></path>
+                    <path d="m6.34 17.66-1.41 1.41"></path>
+                    <path d="m19.07 4.93-1.41 1.41"></path>
+                </svg>
+                <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                </svg>
+            </button>
+
+            <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Buka menu navigasi">
+                <span class="hamburger-bars" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="hero hero-sub" aria-labelledby="hero-title">
+            <div class="hero-inner hero-inner-split">
+                <div>
+                    <nav class="hero-breadcrumb" aria-label="Breadcrumb">
+                        <a href="beranda.html">Beranda</a>
+                        <span aria-hidden="true">/</span>
+                        <span aria-current="page">Panduan &amp; Kalkulator</span>
+                    </nav>
+                    <h1 id="hero-title">
+                        <span class="hero-line">Panduan &amp; Edukasi</span>
+                        <span class="hero-line hero-accent">Ecobrick GEA</span>
+                    </h1>
+                    <p>Pelajari standar pembuatan ecobrick secara mendalam agar karya yang dihasilkan kokoh, aman, dan sesuai ketetapan Global Ecobrick Alliance (GEA).</p>
+                    <div class="hero-actions">
+                        <a href="#kalkulator" class="btn btn-hero" data-magnet>Uji Kepadatan Ecobrick</a>
+                        <a href="#panduan" class="btn btn-hero-outline">Langkah Pembuatan</a>
+                    </div>
+                </div>
+
+                <div class="hero-metrics" aria-label="Ringkasan standar GEA">
+                    <div class="hero-metric-card" data-spotlight>
+                        <strong><span data-countup="0.33" data-decimals="2" data-comma="true">0,33</span> g/ml</strong>
+                        <span>Kepadatan minimum</span>
+                    </div>
+                    <div class="hero-metric-card" data-spotlight>
+                        <strong>0,35–0,40</strong>
+                        <span>Rentang ideal (g/ml)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <section id="ecobrick" class="content-section" data-animated-content data-distance="30" aria-labelledby="heading-ecobrick">
+                <h2 id="heading-ecobrick">
+                    <span class="section-icon" aria-hidden="true">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 3h6v2l2 2v12a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7l2-2V3z" fill="var(--bg-surface)"></path>
+                            <path d="M9 3h6"></path>
+                            <path d="M7 13h10"></path>
+                            <path d="M10 17h4"></path>
+                        </svg>
+                    </span>
+                    <span>Apa Itu Ecobrick?</span>
+                </h2>
+                <p class="lead-copy" data-animated-content data-distance="18">
+                    <strong>Ecobrick</strong> adalah botol plastik bekas yang diisi padat dengan sampah plastik bersih dan kering hingga terasa keras.
+                    Kata <em>eco</em> merujuk pada ramah lingkungan dan <em>brick</em> berarti bata. Metode ini berfungsi menyekuestrasi (mengisolasi dan mengunci) limbah plastik agar tidak terurai menjadi mikroplastik maupun mencemari lingkungan sesuai standar Global Ecobrick Alliance (GEA).
+                </p>
+
+                <h3>Mengapa Harus Ada Standar?</h3>
+                <p data-animated-content data-distance="18">
+                    Jika plastik dimasukkan begitu saja tanpa kepadatan yang cukup, ecobrick menjadi lembek, mudah penyok, dan berbahaya bila dijadikan struktur bangunan.
+                    Kepadatan yang tepat menjaga ecobrick tetap kokoh, lebih tahan panas, dan awet berdasarkan standar <strong>Global Ecobrick Alliance (GEA)</strong>.
+                </p>
+
+                <h3>Spesifikasi Standar Ecobrick (GEA)</h3>
+                <div class="table-responsive" data-animated-content data-distance="24" data-scale="0.98">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Parameter</th>
+                                <th scope="col">Standar Ketentuan</th>
+                            </tr>
+                        </thead>
+                        <tbody data-animated-stagger data-stagger="0.06">
+                            <tr data-animated-item>
+                                <td><strong>Bahan Botol</strong></td>
+                                <td>Botol plastik PET bening (ukuran sama untuk satu proyek, misal 600 ml)</td>
+                            </tr>
+                            <tr data-animated-item>
+                                <td><strong>Isi Botol</strong></td>
+                                <td>Hanya plastik bersih, 100% kering, dan non-biologis</td>
+                            </tr>
+                            <tr data-animated-item>
+                                <td><strong>Kepadatan Minimum</strong></td>
+                                <td>0,33 gram / ml (minimal 198 gram untuk botol 600 ml)</td>
+                            </tr>
+                            <tr data-animated-item>
+                                <td><strong>Target Kepadatan Ideal</strong></td>
+                                <td>0,35 - 0,40 gram / ml (210 - 240 gram untuk botol 600 ml)</td>
+                            </tr>
+                            <tr data-animated-item>
+                                <td><strong>Warna Dasar</strong></td>
+                                <td>Plastik lembut berwarna cerah sebagai dasar bagian bawah botol</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="kalkulator" class="content-section" data-animated-content data-distance="30" aria-labelledby="heading-kalkulator">
+                <h2 id="heading-kalkulator">
+                    <span class="section-icon" aria-hidden="true">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="2" width="16" height="20" rx="2" fill="var(--bg-surface)"></rect>
+                            <rect x="7" y="5" width="10" height="4" rx="1" fill="var(--accent-soft)"></rect>
+                            <circle cx="8" cy="13" r="1" fill="currentColor"></circle>
+                            <circle cx="12" cy="13" r="1" fill="currentColor"></circle>
+                            <circle cx="16" cy="13" r="1" fill="currentColor"></circle>
+                            <circle cx="8" cy="17" r="1" fill="currentColor"></circle>
+                            <path d="M12 17h4"></path>
+                        </svg>
+                    </span>
+                    <span>Kalkulator Kepadatan &amp; Kelayakan Ecobrick</span>
+                </h2>
+                <p data-animated-content data-distance="16">Gunakan kalkulator ini untuk memperkirakan jumlah botol yang dihasilkan sekaligus menguji tingkat <strong>kepadatan</strong>, <strong>kelembaban</strong>, dan <strong>kelayakan standar GEA</strong> (target ideal 0,35 - 0,40 g/ml).</p>
+
+                <div class="calc-box" data-animated-content data-distance="24" data-scale="0.97">
+                    <form id="ecobrickForm" class="calc-form" data-animated-stagger data-stagger="0.06" novalidate>
+                        <div class="form-group" data-animated-item>
+                            <label for="beratPlastik">1. Total Sampah Plastik Tersedia (kg)</label>
+                            <input type="number" id="beratPlastik" min="0.01" step="0.01" value="1" required>
+                            <span class="field-hint">Minimal 0,01 kg (10 gram).</span>
+                        </div>
+
+                        <div class="form-group" data-animated-item>
+                            <label for="ukuranBotol">2. Ukuran Volume Botol Plastik</label>
+                            <select id="ukuranBotol">
+                                <option value="600" selected>Botol Sedang (600 ml)</option>
+                                <option value="300">Botol Kecil (300 ml)</option>
+                                <option value="1500">Botol Besar (1500 ml / 1,5 L)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" data-animated-item>
+                            <label for="beratIsiBotol">3. Berat Isi 1 Botol Hasil Pembuatan (gram)</label>
+                            <input type="number" id="beratIsiBotol" min="1" step="1" value="210" required>
+                            <span class="field-hint">Contoh ideal botol 600 ml: 210 - 240 gram.</span>
+                        </div>
+
+                        <div class="form-group" data-animated-item>
+                            <label for="kondisiKelembaban">4. Kondisi Kelembaban &amp; Kebersihan Plastik</label>
+                            <select id="kondisiKelembaban">
+                                <option value="kering" selected>100% Kering dan Bersih (Sesuai Standar)</option>
+                                <option value="lembab">Sedikit Lembab / Belum Kering Sempurna</option>
+                                <option value="basah">Basah / Ada Sisa Organik (Berbahaya)</option>
+                            </select>
+                        </div>
+
+                        <div class="calc-actions" data-animated-item>
+                            <button type="submit" class="btn btn-primary" data-magnet>
+                                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14"></path>
+                                    <path d="M12 5l7 7-7 7"></path>
+                                </svg>
+                                <span>Analisis &amp; Hitung Ecobrick</span>
+                            </button>
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                        </div>
+                    </form>
+
+                    <div id="calcError" class="form-error" role="alert" hidden></div>
+
+                    <div id="hasilAnalisis" class="calc-result" aria-live="polite">
+                        <h3>Hasil Analisis Kelayakan Ecobrick</h3>
+
+                        <p id="hasilEmpty" class="calc-empty">
+                            Isi data sampah plastik dan berat botol di atas, lalu tekan <strong>Analisis &amp; Hitung Ecobrick</strong> untuk melihat kelayakan standar GEA.
+                        </p>
+
+                        <div id="hasilContent" hidden>
+                            <div class="calc-result-grid">
+                                <div class="result-card">
+                                    <h4>Estimasi Botol Dihasilkan</h4>
+                                    <div class="val" id="resBotolEstimasi">0 Botol</div>
+                                    <span class="result-sub" id="resBotolTxt">-</span>
+                                </div>
+
+                                <div class="result-card">
+                                    <h4>Tingkat Kepadatan</h4>
+                                    <div class="val" id="resKepadatan">0,00 g/ml</div>
+                                    <span class="result-sub">Minimal GEA: 0,33 g/ml (Ideal: 0,35 - 0,40)</span>
+                                </div>
+
+                                <div class="result-card">
+                                    <h4>Status Kelembaban</h4>
+                                    <div class="val"><span id="resKelembabanBadge" class="badge">-</span></div>
+                                    <span class="result-sub" id="resKelembabanTxt">-</span>
+                                </div>
+
+                                <div class="result-card">
+                                    <h4>Status Kelayakan GEA</h4>
+                                    <div class="val"><span id="resStatusBadge" class="badge">-</span></div>
+                                    <span class="result-sub" id="resStatusTxt">-</span>
+                                </div>
+                            </div>
+
+                            <div class="recommendation-box">
+                                <strong>Rekomendasi &amp; Catatan:</strong>
+                                <p id="resRekomendasi"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="panduan" class="content-section" data-animated-content data-distance="30" aria-labelledby="heading-panduan">
+                <h2 id="heading-panduan">
+                    <span class="section-icon" aria-hidden="true">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="4" width="16" height="16" rx="2" fill="var(--bg-surface)"></rect>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                    </span>
+                    <span>Langkah Pembuatan Sesuai Standar</span>
+                </h2>
+                <ol class="step-list" data-animated-stagger>
+                    <li class="step-item" data-animated-item>
+                        <strong>Siapkan Plastik Bersih &amp; Kering:</strong> Cuci dan jemur plastik hingga benar-benar kering. Plastik yang basah atau kotor memicu pertumbuhan bakteri dan menghasilkan gas di dalam botol.
+                    </li>
+                    <li class="step-item" data-animated-item>
+                        <strong>Pilih Botol yang Seragam:</strong> Gunakan merek dan ukuran botol yang sama jika Anda berencana menyusunnya menjadi furnitur atau dinding.
+                    </li>
+                    <li class="step-item" data-animated-item>
+                        <strong>Buat Dasar yang Berwarna:</strong> Masukkan plastik lunak berwarna cerah (seperti kantong plastik) di bagian paling bawah botol untuk tampilan visual yang rapi saat ecobrick disusun.
+                    </li>
+                    <li class="step-item" data-animated-item>
+                        <strong>Padatkan Menggunakan Tongkat Kayu:</strong> Potong plastik besar menjadi ukuran kecil. Masukkan sedikit demi sedikit, lalu tekan menggunakan tongkat kayu atau bambu (bukan besi yang bisa menusuk botol) ke segala arah.
+                    </li>
+                    <li class="step-item" data-animated-item>
+                        <strong>Timbang dan Catat:</strong> Setelah penuh dan terasa keras, timbang botol tersebut. Catat beratnya dan beri label sebelum ditutup rapat.
+                    </li>
+                </ol>
+
+                <div class="alert-box" data-animated-content data-distance="24" data-scale="0.98">
+                    <h3>
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                        <span>Hal yang Dilarang dalam Standar Ecobrick</span>
+                    </h3>
+                    <ul data-animated-stagger data-stagger="0.07">
+                        <li data-animated-item><strong>Dilarang memasukkan kaca, logam, atau kertas:</strong> Kaca dan logam dapat menusuk dinding botol, sedangkan kertas lebih tepat didaur ulang atau dijadikan kompos.</li>
+                        <li data-animated-item><strong>Dilarang memasukkan sampah organik:</strong> Sisa makanan atau daun akan membusuk dan merusak botol dari dalam.</li>
+                        <li data-animated-item><strong>Dilarang menggunakan plastik basah atau lembab:</strong> Kelembaban menciptakan ruang bagi bakteri anaerob untuk memproduksi gas.</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer data-animated-content data-distance="16">
+        <p>&copy; 2026 EcoBrickEdu | Panduan Pengelolaan Sampah Plastik Mandiri</p>
+    </footer>
+
+    <script>
+        const GEA_MIN_DENSITY = 0.33;
+        const GEA_IDEAL_MIN = 0.35;
+        const GEA_IDEAL_MAX = 0.40;
+
+        const form = document.getElementById('ecobrickForm');
+        const beratPlastikInput = document.getElementById('beratPlastik');
+        const ukuranBotolSelect = document.getElementById('ukuranBotol');
+        const beratIsiBotolInput = document.getElementById('beratIsiBotol');
+        const kondisiKelembabanSelect = document.getElementById('kondisiKelembaban');
+        const calcError = document.getElementById('calcError');
+        const hasilEmpty = document.getElementById('hasilEmpty');
+        const hasilContent = document.getElementById('hasilContent');
+
+        /** @param {string} id @param {string} text */
+        function setText(id, text) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.textContent = text;
+            }
+        }
+
+        // Show 3 decimals near a GEA threshold so displayed numbers never contradict the pass/fail verdict.
+        /** @param {number} value */
+        function formatDensity(value) {
+            const roundedTwo = Number(value.toFixed(2));
+            const crossesThreshold =
+                (value < GEA_MIN_DENSITY && roundedTwo >= GEA_MIN_DENSITY) ||
+                (value < GEA_IDEAL_MIN && roundedTwo >= GEA_IDEAL_MIN) ||
+                (value > GEA_IDEAL_MAX && roundedTwo <= GEA_IDEAL_MAX);
+
+            const formatted = crossesThreshold ? value.toFixed(3) : value.toFixed(2);
+            return formatted.replace('.', ',');
+        }
+
+        /**
+         * @param {HTMLElement | null} element
+         * @param {string} variantClass
+         * @param {string} label
+         */
+        function setBadge(element, variantClass, label) {
+            if (!element) {
+                return;
+            }
+            element.className = `badge ${variantClass}`;
+            element.textContent = label;
+        }
+
+        function clearValidation() {
+            if (beratPlastikInput) {
+                beratPlastikInput.removeAttribute('aria-invalid');
+            }
+            if (beratIsiBotolInput) {
+                beratIsiBotolInput.removeAttribute('aria-invalid');
+            }
+            if (calcError) {
+                calcError.hidden = true;
+                calcError.textContent = '';
+            }
+        }
+
+        /**
+         * @param {string} message
+         * @param {HTMLElement[]} invalidFields
+         */
+        function showValidationError(message, invalidFields) {
+            if (calcError) {
+                calcError.textContent = message;
+                calcError.hidden = false;
+            }
+            invalidFields.forEach(field => field.setAttribute('aria-invalid', 'true'));
+            if (invalidFields.length > 0) {
+                invalidFields[0].focus();
+            }
+        }
+
+        /** @param {SubmitEvent} event */
+        function evaluateEcobrick(event) {
+            event.preventDefault();
+            clearValidation();
+
+            if (
+                !(beratPlastikInput instanceof HTMLInputElement) ||
+                !(ukuranBotolSelect instanceof HTMLSelectElement) ||
+                !(beratIsiBotolInput instanceof HTMLInputElement) ||
+                !(kondisiKelembabanSelect instanceof HTMLSelectElement) ||
+                !hasilContent ||
+                !hasilEmpty
+            ) {
+                return;
+            }
+
+            const totalPlastikKg = parseFloat(beratPlastikInput.value);
+            const volumeBotolMl = parseFloat(ukuranBotolSelect.value);
+            const beratIsiGram = parseFloat(beratIsiBotolInput.value);
+            const kondisiKelembaban = kondisiKelembabanSelect.value;
+
+            /** @type {HTMLElement[]} */
+            const invalidFields = [];
+            if (!Number.isFinite(totalPlastikKg) || totalPlastikKg < 0.01) {
+                invalidFields.push(beratPlastikInput);
+            }
+            if (!Number.isFinite(volumeBotolMl) || volumeBotolMl <= 0) {
+                invalidFields.push(ukuranBotolSelect);
+            }
+            if (!Number.isFinite(beratIsiGram) || beratIsiGram < 1) {
+                invalidFields.push(beratIsiBotolInput);
+            }
+
+            if (invalidFields.length > 0) {
+                hasilContent.hidden = true;
+                hasilEmpty.hidden = false;
+                showValidationError(
+                    'Harap masukkan total plastik minimal 0,01 kg dan berat isi botol minimal 1 gram.',
+                    invalidFields
+                );
+                return;
+            }
+
+            const kepadatan = beratIsiGram / volumeBotolMl;
+            const kepadatanStr = formatDensity(kepadatan);
+            const totalGram = totalPlastikKg * 1000;
+            const estimasiBotol = Math.floor(totalGram / beratIsiGram);
+            const minGram = Math.ceil(GEA_MIN_DENSITY * volumeBotolMl);
+            const kurangGram = Math.max(1, Math.ceil((GEA_MIN_DENSITY * volumeBotolMl) - beratIsiGram));
+
+            setText('resBotolEstimasi', `${estimasiBotol} Botol`);
+            setText('resBotolTxt', estimasiBotol === 0
+                ? `Plastik ${Math.round(totalGram)} g belum cukup untuk 1 botol (${beratIsiGram} g).`
+                : `Dari ${String(totalPlastikKg).replace('.', ',')} kg (${Math.round(totalGram)} g) total plastik.`);
+            setText('resKepadatan', `${kepadatanStr} g/ml`);
+
+            const kelembabanBadge = document.getElementById('resKelembabanBadge');
+            const statusBadge = document.getElementById('resStatusBadge');
+
+            if (kondisiKelembaban === 'kering') {
+                setBadge(kelembabanBadge, 'badge-success', 'Aman (Kering)');
+                setText('resKelembabanTxt', 'Plastik 100% kering dan bebas risiko gas.');
+            } else if (kondisiKelembaban === 'lembab') {
+                setBadge(kelembabanBadge, 'badge-warning', 'Peringatan (Lembab)');
+                setText('resKelembabanTxt', 'Plastik masih lembab. Jemur ulang sebelum ditutup.');
+            } else {
+                setBadge(kelembabanBadge, 'badge-danger', 'Bahaya (Basah)');
+                setText('resKelembabanTxt', 'Plastik basah atau berorganik berisiko memicu gas anaerob.');
+            }
+
+            if (kondisiKelembaban === 'basah') {
+                setBadge(statusBadge, 'badge-danger', 'TIDAK LAYAK');
+                setText('resStatusTxt', 'Ditolak (Faktor Kelembaban)');
+                const catatanKepadatan = kepadatan < GEA_MIN_DENSITY
+                    ? ` Selain itu, kepadatan saat ini (${kepadatanStr} g/ml) masih kurang sekitar ${kurangGram} gram dari batas minimal ${minGram} gram.`
+                    : '';
+                setText('resRekomendasi',
+                    `Ecobrick ini tidak boleh dipakai untuk struktur apa pun karena plastik basah atau sisa organik akan membusuk dan menghasilkan gas. Keluarkan seluruh plastik, cuci bersih, dan keringkan total di bawah sinar matahari.${catatanKepadatan}`);
+            } else if (kondisiKelembaban === 'lembab') {
+                setBadge(statusBadge, 'badge-warning', 'BELUM LAYAK');
+                setText('resStatusTxt', 'Perlu Dikeringkan Ulang');
+                const catatanKepadatan = kepadatan < GEA_MIN_DENSITY
+                    ? ` Kepadatan (${kepadatanStr} g/ml) juga belum memenuhi batas minimal 0,33 g/ml (${minGram} gram); perlu tambahan sekitar ${kurangGram} gram plastik kering.`
+                    : ` Kepadatan (${kepadatanStr} g/ml) sudah memenuhi batas minimal, tetapi botol tidak boleh disegel sebelum 100% kering.`;
+                setText('resRekomendasi',
+                    `Standar GEA mewajibkan isi ecobrick benar-benar kering agar bakteri anaerob tidak berkembang.${catatanKepadatan} Keluarkan dan jemur plastik hingga kering sempurna sebelum dipadatkan kembali.`);
+            } else if (kepadatan >= GEA_IDEAL_MIN && kepadatan <= GEA_IDEAL_MAX) {
+                setBadge(statusBadge, 'badge-success', 'LULUS (IDEAL)');
+                setText('resStatusTxt', 'Kokoh & Sesuai Target Ideal GEA');
+                setText('resRekomendasi',
+                    `Kepadatan ${kepadatanStr} g/ml berada pada rentang ideal GEA (0,35 - 0,40 g/ml). Ecobrick ini kokoh, stabil, dan siap digunakan untuk modul furnitur maupun struktur.`);
+            } else if (kepadatan > GEA_IDEAL_MAX) {
+                setBadge(statusBadge, 'badge-success', 'LULUS (SANGAT PADAT)');
+                setText('resStatusTxt', 'Melebihi Target Ideal (> 0,40 g/ml)');
+                setText('resRekomendasi',
+                    `Kepadatan ${kepadatanStr} g/ml melebihi target ideal 0,40 g/ml. Ecobrick sangat keras, pastikan dinding dan alas botol PET tidak menggelembung, retak, atau berubah bentuk.`);
+            } else if (kepadatan >= GEA_MIN_DENSITY) {
+                const tambahIdeal = Math.max(1, Math.ceil((GEA_IDEAL_MIN * volumeBotolMl) - beratIsiGram));
+                setBadge(statusBadge, 'badge-success', 'LULUS (MINIMAL)');
+                setText('resStatusTxt', 'Memenuhi Batas Minimal GEA');
+                setText('resRekomendasi',
+                    `Kepadatan ${kepadatanStr} g/ml sudah memenuhi syarat minimum GEA (0,33 g/ml). Untuk hasil lebih kokoh pada rentang ideal (0,35 - 0,40 g/ml), tambahkan sekitar ${tambahIdeal} gram plastik lagi.`);
+            } else {
+                setBadge(statusBadge, 'badge-warning', 'BELUM LAYAK');
+                setText('resStatusTxt', 'Kepadatan Kurang (Lembek)');
+                setText('resRekomendasi',
+                    `Ecobrick masih lembek atau mudah penyok. Standar minimal GEA adalah 0,33 g/ml (${minGram} gram untuk botol ${volumeBotolMl} ml). Tambahkan sekitar ${kurangGram} gram plastik kering dan padatkan dengan tongkat kayu.`);
+            }
+
+            hasilEmpty.hidden = true;
+            hasilContent.hidden = false;
+            const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const gsapGlobal = /** @type {any} */ (window).gsap;
+            if (!prefersReducedMotion && gsapGlobal) {
+                gsapGlobal.fromTo(
+                    '#hasilContent .result-card, #hasilContent .recommendation-box',
+                    { y: 14, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.42, stagger: 0.06, ease: 'power2.out', clearProps: 'transform,opacity', overwrite: 'auto' }
+                );
+            } else {
+                hasilContent.classList.remove('result-refresh');
+                void hasilContent.offsetWidth;
+                hasilContent.classList.add('result-refresh');
+            }
+        }
+
+        if (form instanceof HTMLFormElement) {
+            [beratPlastikInput, beratIsiBotolInput, ukuranBotolSelect].forEach(control => {
+                if (control) {
+                    control.addEventListener('input', () => {
+                        control.removeAttribute('aria-invalid');
+                    });
+                }
+            });
+            form.addEventListener('submit', evaluateEcobrick);
+            form.addEventListener('reset', () => {
+                clearValidation();
+                if (hasilContent) {
+                    hasilContent.hidden = true;
+                }
+                if (hasilEmpty) {
+                    hasilEmpty.hidden = false;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

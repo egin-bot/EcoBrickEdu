@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Hubungi Kami - EcoBrickEdu</title>
+    <script>
+        (function(){try{var d=document.documentElement;var t=localStorage.getItem('ecobrickedu-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}d.setAttribute('data-theme',t);if(!window.matchMedia||!window.matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('gsap-prep');}}catch(_){}})();
+    </script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: clamp(18px, 3vw, 26px);
+            align-items: start;
+        }
+
+        .contact-info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .info-icon {
+            background: var(--accent-soft);
+            color: var(--text-accent);
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid var(--accent-border);
+            transition: transform 0.22s var(--ease-out), background-color 0.2s ease;
+        }
+
+        .info-item:hover .info-icon {
+            transform: scale(1.06);
+        }
+
+        .info-text {
+            min-width: 0;
+        }
+
+        .info-text h3 {
+            margin-top: 0;
+            font-size: 1.05rem;
+            color: var(--text-accent);
+            margin-bottom: 4px;
+        }
+
+        .info-text p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            overflow-wrap: anywhere;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        @media (max-width: 479px) {
+            .info-item {
+                gap: 12px;
+            }
+
+            .info-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            textarea.form-control {
+                min-height: 112px;
+            }
+        }
+
+        @media (min-width: 800px) {
+            .contact-grid {
+                grid-template-columns: minmax(260px, 1fr) 1.45fr;
+            }
+        }
+    </style>
+    <script src="assets/vendor/gsap.min.js" defer></script>
+    <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+    <script src="assets/js/nav.js" defer></script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+    <header>
+        <a href="beranda.html" class="logo">
+            <svg class="icon icon-brand" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M11 3h6v3l3 3v14a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2V9l3-3V3z" fill="rgba(224,242,254,0.2)"></path>
+                <path d="M11 3h6"></path>
+                <path d="M8 14h12"></path>
+                <path d="M14 19c2.5 0 4-1.8 4-4-2.2 0-4 1.5-4 4Z" fill="#e0f2fe"></path>
+            </svg>
+            <span>EcoBrickEdu</span>
+        </a>
+
+        <div class="header-controls">
+            <nav id="nav-menu" aria-label="Navigasi utama">
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="about.html">Panduan &amp; Kalkulator</a></li>
+                    <li><a href="galeri.html">Galeri Karya</a></li>
+                    <li><a href="contact.html" aria-current="page">Hubungi Kami</a></li>
+                </ul>
+            </nav>
+
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Aktifkan mode gelap" aria-pressed="false" title="Ubah mode terang atau gelap">
+                <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2"></path>
+                    <path d="M12 20v2"></path>
+                    <path d="m4.93 4.93 1.41 1.41"></path>
+                    <path d="m17.66 17.66 1.41 1.41"></path>
+                    <path d="M2 12h2"></path>
+                    <path d="M20 12h2"></path>
+                    <path d="m6.34 17.66-1.41 1.41"></path>
+                    <path d="m19.07 4.93-1.41 1.41"></path>
+                </svg>
+                <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                </svg>
+            </button>
+
+            <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Buka menu navigasi">
+                <span class="hamburger-bars" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="hero hero-sub hero-compact" aria-labelledby="hero-title">
+            <div class="hero-inner">
+                <div>
+                    <nav class="hero-breadcrumb" aria-label="Breadcrumb">
+                        <a href="beranda.html">Beranda</a>
+                        <span aria-hidden="true">/</span>
+                        <span aria-current="page">Hubungi Kami</span>
+                    </nav>
+                    <h1 id="hero-title">
+                        <span class="hero-line">Hubungi Tim</span>
+                        <span class="hero-line hero-accent">EcoBrickEdu</span>
+                    </h1>
+                    <p>Punya pertanyaan, ingin berkolaborasi, atau mengundang tim kami dalam kegiatan edukasi pengelolaan sampah? Kirimkan pesan Anda melalui formulir di bawah ini.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="contact-grid">
+                <section class="content-section" data-animated-content data-direction="horizontal" data-reverse="true" data-distance="30" data-scale="0.98" aria-labelledby="info-heading">
+                    <h2 id="info-heading">
+                        <span class="section-icon" aria-hidden="true">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="9" fill="var(--bg-surface)"></circle>
+                                <line x1="12" y1="10" x2="12" y2="16"></line>
+                                <circle cx="12" cy="7.5" r="0.8" fill="currentColor"></circle>
+                            </svg>
+                        </span>
+                        <span>Informasi Kontak</span>
+                    </h2>
+
+                    <div class="contact-info-list">
+                        <div class="info-item" data-animated-content data-distance="18" data-delay="0.08">
+                            <div class="info-icon" aria-hidden="true">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="var(--bg-surface)"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div class="info-text">
+                                <h3>Lokasi</h3>
+                                <p>Jl. Raya Cikeusik-Cidahu, Kec. Cidahu, Kab. Kuningan, Jawa Barat</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content-section" data-animated-content data-direction="horizontal" data-distance="30" data-scale="0.98" data-delay="0.08" aria-labelledby="form-heading">
+                    <h2 id="form-heading">
+                        <span class="section-icon" aria-hidden="true">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill="var(--bg-surface)"></path>
+                                <path d="M8 9h8"></path>
+                                <path d="M8 13h5"></path>
+                            </svg>
+                        </span>
+                        <span>Kirim Pesan</span>
+                    </h2>
+
+                    <div class="form-error" id="contactError" role="alert" hidden></div>
+                    <div class="form-success" id="successAlert" role="status" aria-live="polite" hidden></div>
+
+                    <form id="contactForm" class="contact-form" data-animated-stagger data-stagger="0.06" novalidate>
+                        <div class="form-group" data-animated-item>
+                            <label for="name">Nama Lengkap</label>
+                            <input type="text" id="name" name="name" autocomplete="name" class="form-control" placeholder="Masukkan nama Anda" required>
+                        </div>
+
+                        <div class="form-group" data-animated-item>
+                            <label for="email">Alamat Email</label>
+                            <input type="email" id="email" name="email" autocomplete="email" class="form-control" placeholder="nama@email.com" required>
+                        </div>
+
+                        <div class="form-group" data-animated-item>
+                            <label for="subject">Subjek Pesan</label>
+                            <input type="text" id="subject" name="subject" class="form-control" placeholder="Contoh: Kolaborasi atau Tanya Ecobrick" required>
+                        </div>
+
+                        <div class="form-group" data-animated-item>
+                            <label for="message">Pesan Anda</label>
+                            <textarea id="message" name="message" class="form-control" placeholder="Tuliskan pesan atau pertanyaan Anda di sini" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full" data-animated-item data-magnet>
+                            <span>Kirim Pesan</span>
+                            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                    </form>
+
+                    <p class="notice-note" data-animated-content data-distance="16" data-delay="0.12">Catatan: Formulir ini merupakan simulasi halaman statis tanpa pengiriman ke server.</p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer data-animated-content data-distance="16">
+        <p>&copy; 2026 EcoBrickEdu | Panduan Pengelolaan Sampah Plastik Mandiri</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const contactForm = document.getElementById('contactForm');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const subjectInput = document.getElementById('subject');
+            const messageInput = document.getElementById('message');
+            const contactError = document.getElementById('contactError');
+            const successAlert = document.getElementById('successAlert');
+            if (
+                !(contactForm instanceof HTMLFormElement) ||
+                !(nameInput instanceof HTMLInputElement) ||
+                !(emailInput instanceof HTMLInputElement) ||
+                !(subjectInput instanceof HTMLInputElement) ||
+                !(messageInput instanceof HTMLTextAreaElement) ||
+                !contactError ||
+                !successAlert
+            ) {
+                return;
+            }
+            /** @type {Array<HTMLInputElement | HTMLTextAreaElement>} */
+            const fields = [nameInput, emailInput, subjectInput, messageInput];
+
+            const clearMessages = () => {
+                contactError.hidden = true;
+                contactError.textContent = '';
+                successAlert.hidden = true;
+                successAlert.textContent = '';
+                fields.forEach(field => field.removeAttribute('aria-invalid'));
+            };
+
+            fields.forEach(field => {
+                field.addEventListener('input', () => {
+                    if (field.hasAttribute('aria-invalid')) {
+                        field.removeAttribute('aria-invalid');
+                    }
+                    if (!successAlert.hidden) {
+                        successAlert.hidden = true;
+                        successAlert.textContent = '';
+                    }
+                });
+            });
+
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                clearMessages();
+
+                const nameVal = nameInput.value.trim();
+                const emailVal = emailInput.value.trim();
+                const subjectVal = subjectInput.value.trim();
+                const messageVal = messageInput.value.trim();
+                const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+
+                /** @type {Array<HTMLInputElement | HTMLTextAreaElement>} */
+                const invalidFields = [];
+                if (!nameVal) invalidFields.push(nameInput);
+                if (!emailVal || !emailValid) invalidFields.push(emailInput);
+                if (!subjectVal) invalidFields.push(subjectInput);
+                if (!messageVal) invalidFields.push(messageInput);
+
+                const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                const gsapGlobal = /** @type {any} */ (window).gsap;
+
+                if (invalidFields.length > 0) {
+                    contactError.textContent = !emailValid && emailVal
+                        ? 'Harap masukkan alamat email yang valid.'
+                        : 'Harap lengkapi seluruh kolom formulir sebelum mengirim pesan.';
+                    contactError.hidden = false;
+                    if (!prefersReducedMotion && gsapGlobal) {
+                        gsapGlobal.fromTo(contactError, { y: -8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: 'power2.out', clearProps: 'transform,opacity', overwrite: 'auto' });
+                    }
+                    invalidFields.forEach(field => field.setAttribute('aria-invalid', 'true'));
+                    invalidFields[0].focus();
+                    return;
+                }
+
+                successAlert.textContent = `Simulasi pengiriman berhasil: pesan dari ${nameVal} tercatat di halaman ini.`;
+                successAlert.hidden = false;
+                if (!prefersReducedMotion && gsapGlobal) {
+                    gsapGlobal.fromTo(successAlert, { y: -8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: 'power2.out', clearProps: 'transform,opacity', overwrite: 'auto' });
+                }
+                contactForm.reset();
+            });
+        });
+    </script>
+</body>
+</html>
